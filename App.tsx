@@ -3,6 +3,7 @@ import Header from './components/Header';
 import VoiceSelector from './components/VoiceSelector';
 import GenerateButton from './components/GenerateButton';
 import AudioPlayer from './components/AudioPlayer';
+import SpeedSlider from './components/SpeedSlider';
 import { VOICES } from './constants';
 import { generateSpeech } from './services/geminiService';
 import { decodeBase64, pcmToWavBlob } from './utils/audioUtils';
@@ -15,6 +16,7 @@ const App: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [audioSrc, setAudioSrc] = useState<string | null>(null);
     const [isCensorEnabled, setIsCensorEnabled] = useState<boolean>(false);
+    const [speed, setSpeed] = useState<number>(1.0);
 
     useEffect(() => {
         // Clean up the object URL to avoid memory leaks when the component unmounts
@@ -60,6 +62,12 @@ const App: React.FC = () => {
                         voices={VOICES}
                         selectedVoice={selectedVoice}
                         onSelectVoice={setSelectedVoice}
+                        disabled={isLoading}
+                    />
+                    
+                    <SpeedSlider 
+                        speed={speed}
+                        onSpeedChange={setSpeed}
                         disabled={isLoading}
                     />
 
@@ -109,7 +117,7 @@ const App: React.FC = () => {
                         </div>
                     )}
                     
-                    <AudioPlayer src={audioSrc} />
+                    <AudioPlayer src={audioSrc} speed={speed} />
                 </main>
                 <footer className="text-center mt-8 text-gray-500 text-sm">
                     <p>Powered by Google Gemini API</p>

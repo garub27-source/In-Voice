@@ -1,16 +1,26 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { DownloadIcon } from '../constants';
 
 interface AudioPlayerProps {
     src: string | null;
+    speed: number;
 }
 
-const AudioPlayer: React.FC<AudioPlayerProps> = ({ src }) => {
+const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, speed }) => {
+    const audioRef = useRef<HTMLAudioElement>(null);
+
+    useEffect(() => {
+        if (audioRef.current) {
+            audioRef.current.playbackRate = speed;
+        }
+    }, [speed, src]); // Update speed when the slider value or the audio source changes
+
     if (!src) return null;
 
     return (
         <div className="w-full mt-4 space-y-3">
              <audio
+                ref={audioRef}
                 controls
                 autoPlay
                 src={src}
