@@ -1,0 +1,5 @@
+{
+  "name": "InVoice",
+  "description": "A powerful text-to-speech application that uses Google's Gemini API to generate high-quality, natural-sounding audio from text. Enter your text, select a voice, and listen to the generated speech.",
+  "requestFramePermissions": []
+}
